@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="CyrillicConverterLCD.View.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+           MinWidth="300">
+    <UserControl.Resources>
+        <Thickness x:Key="m">3</Thickness>
+    </UserControl.Resources>
+    <StackPanel>
+        
+            <TextBox Margin="{StaticResource m}" FontSize="20"/>
+        <ComboBox Margin="{StaticResource m}"/>
+        <Button Margin="{StaticResource m}" IsDefault="True" >Copy</Button>
+    </StackPanel>
+</UserControl>
