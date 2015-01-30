@@ -21,15 +21,20 @@ namespace CyrillicConverterLCD.Common
     /// </li>
     abstract class Component
     {
-        protected string name;
+        private string _name;
 
         // Constructor
         public Component(string name)
         {
-            this.name = name;
+            this._name = name;
         }
 
-        public abstract void Display(int depth);
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public abstract string Convert(string target);
     }
 
     /// <summary>
@@ -61,15 +66,9 @@ namespace CyrillicConverterLCD.Common
             children.Remove(component);
         }
 
-        public override void Display(int depth)
+        public override string Convert(string target)
         {
-            Console.WriteLine(new String('-', depth) + name);
-
-            // Recursively display child nodes
-            foreach (Component component in children)
-            {
-                component.Display(depth + 2);
-            }
+            return target;
         }
     }
 
@@ -82,17 +81,17 @@ namespace CyrillicConverterLCD.Common
     /// <lu>определяет поведение примитивных объектов в композиции;</lu>
     /// </li>
     /// </remarks>
-    class Leaf : Component
-    {
-        // Constructor
-        public Leaf(string name)
-            : base(name)
-        {
-        }
+    //class Leaf //: Component
+    //{
+    //    // Constructor
+    //    public Leaf(string name)
+    //        : base(name)
+    //    {
+    //    }
 
-        public override void Display(int depth)
-        {
-            Console.WriteLine(new String('-', depth) + name);
-        }
-    }
+    //    public override void Display(int depth)
+    //    {
+    //        Console.WriteLine(new String('-', depth) + _name);
+    //    }
+    //}
 }

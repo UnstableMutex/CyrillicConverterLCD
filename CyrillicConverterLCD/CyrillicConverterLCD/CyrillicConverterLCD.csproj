@@ -125,6 +125,12 @@
   <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CyrillicConverterLCD.Common\CyrillicConverterLCD.Common.csproj">
+      <Project>{1cc6ceca-2e93-49af-9a25-e9c32ca8e7d7}</Project>
+      <Name>CyrillicConverterLCD.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
