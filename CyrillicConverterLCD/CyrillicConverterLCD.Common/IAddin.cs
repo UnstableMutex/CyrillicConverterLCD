@@ -18,17 +18,7 @@ namespace CyrillicConverterLCD.Common
         IEnumerable<IOneAddin> Addins { get; }
     }
 
-    public class JsonFileAddin : ICompositeAddin
-    {
-        private readonly string _folder;
-
-        public JsonFileAddin(string folder)
-        {
-            _folder = folder;
-        }
-
-        public IEnumerable<IOneAddin> Addins { get; private set; }
-    }
+   
 
     public class FileDisplayInfo
     {
