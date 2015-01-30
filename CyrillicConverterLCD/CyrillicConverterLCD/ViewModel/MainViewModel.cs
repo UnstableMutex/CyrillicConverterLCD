@@ -1,4 +1,7 @@
+using System.IO;
+using System.Text;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 
 namespace CyrillicConverterLCD.ViewModel
 {
@@ -16,6 +19,8 @@ namespace CyrillicConverterLCD.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private string _text;
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -29,6 +34,25 @@ namespace CyrillicConverterLCD.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
+            Temp();
+        }
+
+        void Temp()
+        {
+            string s = "d";
+            var bytearray = Encoding.UTF32.GetBytes(s);
+        JsonSerializer ser=new JsonSerializer();
+            TextWriter tw=new StreamWriter("sample.json");
+            JsonWriter w =new JsonTextWriter(tw);
+        }
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                _text = value;
+                RaisePropertyChanged();
+            }
         }
     }
 }

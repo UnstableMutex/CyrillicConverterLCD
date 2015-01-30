@@ -8,7 +8,7 @@
     <UserControl.Resources>
         <Thickness x:Key="m">3</Thickness>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
         
             <TextBox Margin="{StaticResource m}" FontSize="20"/>
         <ComboBox Margin="{StaticResource m}"/>
