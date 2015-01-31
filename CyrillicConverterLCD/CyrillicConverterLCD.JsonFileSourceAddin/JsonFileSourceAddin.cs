@@ -16,9 +16,31 @@ namespace CyrillicConverterLCD.JsonFileSourceAddin
     {
         private readonly string _folder;
 
-        public JsonFileAddin(string folder)
+        public JsonFileAddin()
         {
-            _folder = folder;
+            _folder = "Addins";
+            FindFiles();
+        }
+
+        private void FindFiles()
+        {
+          var files=  Directory.GetFiles("Addins", "*.json");
+            var addins = new List<IOneAddin>();
+            foreach (var file in files)
+            {
+                try
+                {
+                    OneJsonFileSource s=new OneJsonFileSource(file);
+                    addins.Add(s);
+
+                }
+                catch (Exception)
+                {
+                    
+                  
+                }
+            }
+            Addins = addins;
         }
 
         public IEnumerable<IOneAddin> Addins { get; private set; }
@@ -41,7 +63,7 @@ namespace CyrillicConverterLCD.JsonFileSourceAddin
           fdi=   JsonConvert.DeserializeObject<FileDisplayInfo>(s);
         }
 
-        public string DisplayName { get; private set; }
+        public string DisplayName { get { return fdi.DisplayName; } }
         public string Convert(string target)
         {
             string result = string.Empty;
@@ -58,6 +80,7 @@ namespace CyrillicConverterLCD.JsonFileSourceAddin
                   result+=  letter.Value;
                 }
             }
+            return result;
         }
     }
 }

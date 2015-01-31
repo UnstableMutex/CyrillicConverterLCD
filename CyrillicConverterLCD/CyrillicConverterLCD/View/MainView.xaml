@@ -9,9 +9,10 @@
         <Thickness x:Key="m">3</Thickness>
     </UserControl.Resources>
     <StackPanel DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
-        
-            <TextBox Margin="{StaticResource m}" FontSize="20"/>
-        <ComboBox Margin="{StaticResource m}"/>
+
+        <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Delay=200}" Margin="{StaticResource m}" FontSize="20"/>
+        <ComboBox ItemsSource="{Binding DisplayList}" SelectedItem="{Binding SelectedDisplay}" Margin="{StaticResource m}"/>
         <Button Margin="{StaticResource m}" IsDefault="True" >Copy</Button>
+        <TextBox Text="{Binding Result}"/>
     </StackPanel>
 </UserControl>

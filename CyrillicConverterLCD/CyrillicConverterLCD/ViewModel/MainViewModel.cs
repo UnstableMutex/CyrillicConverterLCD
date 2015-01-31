@@ -1,5 +1,9 @@
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Windows.Documents;
 using CyrillicConverterLCD.Common;
@@ -23,6 +27,8 @@ namespace CyrillicConverterLCD.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private string _text;
+        private IEnumerable<IOneAddin> _addins;
+        private string _selectedDisplay;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -37,43 +43,62 @@ namespace CyrillicConverterLCD.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
-            Temp();
+          _addins=  GetAddins();
         }
 
-        private void Temp()
+        private IEnumerable<IOneAddin> GetAddins()
         {
-            string s = "d";
-            var bytearray = Encoding.UTF32.GetBytes(s);
-            JsonSerializer ser = new JsonSerializer();
-            //using (TextWriter tw = new StreamWriter("test.json", false, Encoding.Unicode))
-            //{
-
-            //    FileDisplayInfo file = new FileDisplayInfo();
-            //    file.DisplayName = "LCD";
-            //    List<Lett> l = new List<Lett>();
-            //    l.Add(new Lett() { Letter = "À", Value = @"\x41" });
-            //    l.Add(new Lett() { Letter = "Á", Value = @"\xA0" });
-            //    file.Letters = l.ToArray();
-            //    var f = JsonConvert.SerializeObject(file, Formatting.Indented);
-            //    tw.Write(f);
-            //}  
-            FileDisplayInfo fdi;
-            using (TextReader tr=new StreamReader("test.json", Encoding.Unicode))
+          CompositionContainer c=new CompositionContainer(new DirectoryCatalog("Addins"));
+            c.ComposeParts();
+         var cas=   c.GetExportedValues<ICompositeAddin>();
+            var oneaddins = c.GetExportedValues<IOneAddin>();
+            List<IOneAddin> addins=new List<IOneAddin>();
+            foreach (var ca in cas)
             {
-              
-                var str = tr.ReadToEnd();
-              fdi=  JsonConvert.DeserializeObject<FileDisplayInfo>(str);
+                foreach (var oa in ca.Addins)
+                {
+                    addins.Add(oa);
+                }
             }
+            foreach (var oneaddin in oneaddins)
+            {
+                addins.Add(oneaddin);
+            }
+            return addins;
 
         }
+
+        public IEnumerable<string> DisplayList
+        {
+            get { return _addins.Select(x => x.DisplayName); }
+        }
+
+        public string SelectedDisplay
+        {
+            get { return _selectedDisplay; }
+            set { _selectedDisplay = value; }
+        }
+
         public string Text
         {
             get { return _text; }
             set
             {
                 _text = value;
-                RaisePropertyChanged();
+                Calc(_text);
+                RaisePropertyChanged("Result");
             }
         }
+
+        private void Calc(string text)
+        {
+            var selAddin = _addins.SingleOrDefault(x => x.DisplayName == SelectedDisplay);
+            if (selAddin != null)
+            {
+                Result = selAddin.Convert(text);
+            }
+        }
+
+        public string Result { get; private set; }
     }
 }
