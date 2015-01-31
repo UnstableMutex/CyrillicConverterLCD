@@ -44,6 +44,8 @@ namespace CyrillicConverterLCD.ViewModel
             ////    // Code runs "for real"
             ////}
           _addins=  GetAddins();
+            DisplayList = _addins.Select(x => x.DisplayName);
+            SelectedDisplay = DisplayList.FirstOrDefault();
         }
 
         private IEnumerable<IOneAddin> GetAddins()
@@ -68,10 +70,7 @@ namespace CyrillicConverterLCD.ViewModel
 
         }
 
-        public IEnumerable<string> DisplayList
-        {
-            get { return _addins.Select(x => x.DisplayName); }
-        }
+        public IEnumerable<string> DisplayList { get; set; }
 
         public string SelectedDisplay
         {
