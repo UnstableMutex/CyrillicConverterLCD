@@ -13,5 +13,6 @@ namespace CyrillicConverterLCD
     /// </summary>
     public partial class App : Application
     {
+        public const string AppName = "CyrillicConverterLCD";
     }
 }

@@ -23,6 +23,7 @@ namespace CyrillicConverterLCD
         public MainWindow()
         {
             InitializeComponent();
+            Title = App.AppName;
         }
     }
 }
