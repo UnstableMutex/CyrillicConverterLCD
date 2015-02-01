@@ -12,7 +12,7 @@
 
         <TextBox Name="t" Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Delay=200}" Margin="{StaticResource m}" FontSize="20"/>
         <ComboBox ItemsSource="{Binding DisplayList}" SelectedItem="{Binding SelectedDisplay}" Margin="{StaticResource m}"/>
-        <Button Margin="{StaticResource m}" IsDefault="True" >Copy</Button>
+        <Button Margin="{StaticResource m}" IsDefault="True" Command="{Binding CopyCommand}">Copy</Button>
         <TextBox Text="{Binding Result}"/>
     </StackPanel>
 </UserControl>

@@ -5,9 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using CyrillicConverterLCD.Common;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Newtonsoft.Json;
 
 namespace CyrillicConverterLCD.ViewModel
@@ -46,8 +49,15 @@ namespace CyrillicConverterLCD.ViewModel
           _addins=  GetAddins();
             DisplayList = _addins.Select(x => x.DisplayName);
             SelectedDisplay = DisplayList.FirstOrDefault();
+            CopyCommand = new RelayCommand(Copy);
         }
 
+        public ICommand CopyCommand { get; private set; }
+
+        private void Copy()
+        {
+            Clipboard.SetText(Result);
+        }
         private IEnumerable<IOneAddin> GetAddins()
         {
           CompositionContainer c=new CompositionContainer(new DirectoryCatalog("Addins"));

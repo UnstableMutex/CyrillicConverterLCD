@@ -69,15 +69,18 @@ namespace CyrillicConverterLCD.JsonFileSourceAddin
             string result = string.Empty;
             foreach (var ch in target)
             {
-                if (Regex.IsMatch(ch.ToString(), @"^[a-zA-Z0-9]$"))
+                if (Regex.IsMatch(ch.ToString(), @"^[a-zA-Z0-9\s]$"))
                 {
                     result += ch;
                 }
                 else
                 {
+
                  var letter=   fdi.Letters.SingleOrDefault(x => x.Letter == ch);
-                    //обработать нулреференс
-                  result+=  letter.Value;
+                    if (letter != null)
+                    {
+                        result += letter.Value;
+                    }
                 }
             }
             return result;
