@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharsNotSupportedException.cs" />
-    <Compile Include="coposite.cs" />
     <Compile Include="FileDisplayInfo.cs" />
     <Compile Include="ICompositeAddin.cs" />
     <Compile Include="IOneAddin.cs" />
