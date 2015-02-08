@@ -3,15 +3,12 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 using CyrillicConverterLCD.Common;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Newtonsoft.Json;
+
 namespace CyrillicConverterLCD.ViewModel
 {
     /// <summary>
@@ -29,8 +26,8 @@ namespace CyrillicConverterLCD.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private string _text;
-        private IEnumerable<IOneAddin> _addins;
-        private string _selectedDisplay;
+        private readonly IEnumerable<IOneAddin> _addins;
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -59,36 +56,27 @@ namespace CyrillicConverterLCD.ViewModel
             const string addinsfolder = "Addins";
             var addinsdir = new DirectoryInfo(addinsfolder);
             var addindirs = addinsdir.GetDirectories();
-            AggregateCatalog addinscatalog = new AggregateCatalog();
+            var addinscatalog = new AggregateCatalog();
             foreach (var di in addindirs)
             {
                 var dc = new DirectoryCatalog(Path.Combine(addinsfolder, di.Name));
                 addinscatalog.Catalogs.Add(dc);
             }
-            CompositionContainer c = new CompositionContainer(addinscatalog);
+            var c = new CompositionContainer(addinscatalog);
             c.ComposeParts();
             var cas = c.GetExportedValues<ICompositeAddin>();
             var oneaddins = c.GetExportedValues<IOneAddin>();
-            List<IOneAddin> addins = new List<IOneAddin>();
+            var addins = new List<IOneAddin>();
             foreach (var ca in cas)
             {
-                foreach (var oa in ca.Addins)
-                {
-                    addins.Add(oa);
-                }
+                addins.AddRange(ca.Addins);
             }
-            foreach (var oneaddin in oneaddins)
-            {
-                addins.Add(oneaddin);
-            }
+            addins.AddRange(oneaddins);
             return addins;
         }
         public IEnumerable<string> DisplayList { get; set; }
-        public string SelectedDisplay
-        {
-            get { return _selectedDisplay; }
-            set { _selectedDisplay = value; }
-        }
+        public string SelectedDisplay { get; set; }
+
         public string Text
         {
             get { return _text; }

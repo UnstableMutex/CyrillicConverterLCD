@@ -6,9 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using CyrillicConverterLCD.Common;
 using Newtonsoft.Json;
+
 namespace CyrillicConverterLCD.JsonFileSourceAddin
 {
     [Export(typeof(ICompositeAddin))]
